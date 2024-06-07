@@ -1,0 +1,27 @@
+{
+	"nodes":[
+		{"id":"c16367cb9cd4c167","type":"text","text":"# Linux","x":-120,"y":-200,"width":155,"height":55},
+		{"id":"087c6e0957a3da47","type":"text","text":"VARIABLES DE ENTORNO","x":140,"y":-205,"width":250,"height":60},
+		{"id":"cdd6fd3129eaead3","type":"text","text":"PATH","x":549,"y":-145,"width":250,"height":60,"color":"4"},
+		{"id":"0c645d6cb4063aef","type":"text","text":"HOME","x":549,"y":-284,"width":250,"height":60,"color":"4"},
+		{"id":"b6567011f33c23da","type":"text","text":"SHELL","x":549,"y":-384,"width":250,"height":60,"color":"4"},
+		{"id":"b599a4b9c42604a8","type":"text","text":"###### Basurero","x":376,"y":180,"width":144,"height":60,"color":"6"},
+		{"id":"e636b4bebfdd33bc","type":"text","text":"dev/null","x":549,"y":280,"width":141,"height":50},
+		{"id":"3a6d9d4dc700805b","type":"text","text":"Directorios","x":-116,"y":0,"width":148,"height":64,"color":"3"},
+		{"id":"98724360cb187aaa","x":-431,"y":-107,"width":171,"height":50,"type":"text","text":"COMANDOS"},
+		{"id":"e4787a322476d979","x":-660,"y":-155,"width":121,"height":50,"type":"text","text":"stderr"},
+		{"id":"02721d93c9c70b0e","x":-656,"y":-82,"width":117,"height":50,"type":"text","text":"stdout"}
+	],
+	"edges":[
+		{"id":"94c452a56b84bf18","fromNode":"c16367cb9cd4c167","fromSide":"right","toNode":"087c6e0957a3da47","toSide":"left"},
+		{"id":"11f99f67d48dd6e9","fromNode":"087c6e0957a3da47","fromSide":"right","toNode":"b6567011f33c23da","toSide":"left"},
+		{"id":"a775240e849e0f3b","fromNode":"087c6e0957a3da47","fromSide":"right","toNode":"0c645d6cb4063aef","toSide":"left"},
+		{"id":"eb8590549de9acb7","fromNode":"087c6e0957a3da47","fromSide":"right","toNode":"cdd6fd3129eaead3","toSide":"left"},
+		{"id":"7be1292466274418","fromNode":"c16367cb9cd4c167","fromSide":"bottom","toNode":"3a6d9d4dc700805b","toSide":"top"},
+		{"id":"2de5b849d3bdc1a5","fromNode":"b599a4b9c42604a8","fromSide":"bottom","toNode":"e636b4bebfdd33bc","toSide":"top"},
+		{"id":"ee650fb905f9656b","fromNode":"3a6d9d4dc700805b","fromSide":"right","toNode":"b599a4b9c42604a8","toSide":"top"},
+		{"id":"de59147afb6f3fd8","fromNode":"c16367cb9cd4c167","fromSide":"bottom","toNode":"98724360cb187aaa","toSide":"right"},
+		{"id":"5a9a11347b3723d6","fromNode":"98724360cb187aaa","fromSide":"left","toNode":"e4787a322476d979","toSide":"right"},
+		{"id":"77ec7c1ad082e6ff","fromNode":"98724360cb187aaa","fromSide":"left","toNode":"02721d93c9c70b0e","toSide":"right"}
+	]
+}
