@@ -6,6 +6,7 @@
       {
         "id": "20a96a0425205af1",
         "type": "tabs",
+        "dimension": 49.343675417661096,
         "children": [
           {
             "id": "3b03f499f5c3933f",
@@ -13,26 +14,32 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Parte_1/stder_stdout.md",
+                "file": "Notas Diarias/2024-08-23.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "6a37ecf3b925bb32",
+        "type": "tabs",
+        "dimension": 50.65632458233891,
+        "children": [
           {
             "id": "1bf40dd26ac08207",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Parte_1/Descriptores.md",
+                "file": "todo.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -82,7 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "683ef315e8eee892",
@@ -98,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Parte_1/Descriptores.md",
+                "file": "Notas Diarias/2024-08-23.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Parte_1/Descriptores.md",
+                "file": "Notas Diarias/2024-08-23.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Parte_1/Descriptores.md"
+                "file": "Notas Diarias/2024-08-23.md"
               }
             }
           }
@@ -159,12 +166,18 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "1bf40dd26ac08207",
+  "active": "75970c44005c9e7a",
   "lastOpenFiles": [
+    "todo.md",
+    "Notas Diarias/2024-08-23.md",
+    "Notas Diarias/2024-08-22.md",
+    "README.md",
+    "Notas Diarias/2024-08-21.md",
+    "Mapa.canvas",
+    "Notas Diarias",
     "Parte_1/stder_stdout.md",
     "Parte_1/Comandos.md",
     "Parte_1/Descriptores.md",
-    "Mapa.canvas",
     "General/Basurero.md",
     "General",
     "Sin título.md",
