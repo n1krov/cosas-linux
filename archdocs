@@ -1,0 +1,126 @@
+hacemos loadkeys es
+definimos las particiones 
+
+cfdisk
+
+cómo voy a hacer una partición para una PC con edu necesitamos las siguientes particiones 
+
+boot/efi fat32 512M 
+boot/1024 ext4
+linuxswap la mitad de tu ram
+/ el resto de tu disco 
+
+antes de escribir todo y salir de cfdisk asegúrate de modificar el tipo de la partición de la swap a linuxswap 
+
+
+si tienes varios discos puedes ejecutar
+lsblk para ver la lista de discos que hay en tu máquina y luego 
+
+ cfdisk /dev/<nombre del volumen>
+
+formateamos las particiónes
+
+
+puedes jugar con lsblk para ver el volúmen que particionaste, su no es un nvme probablemente sea de tipo /dev/sea
+
+así que agarras ese volumen y a cada partición la formateadas como arriba
+
+----
+----
+
+después del swpaon se montan las particiónes
+
+hacemos mkdir -p /mnt/boot/edu
+
+montamos cada partición en su directorio correspondiente en mnt
+
+la raíz en mnt
+la boot en boot y mnt/boot efi en mnt/boot/efi
+
+
+ahora usamos 
+
+pacstrap /mnt linux linux-firmware networkmanager grub wpa_supplicant base base-devel
+
+
+definimos el archivo fstab que tiene todo lo relacionado a las particiónes del sistema
+
+hacemos 
+genfstab -U /mnt > /mnt/etc/fstab
+
+para meternos en root del sistema en /mnt ejecutamos
+arch-chroot /mnt
+
+ahora estamos como root. definimos una contraseña para root con
+passwd
+
+> cambia zoso por tu nombre de usuario para lo siguente.
+
+
+ahora agregamos un nuevo usuario
+useradd -m zoso 
+
+la m es para que te cree su home
+
+definimos una password para el usuario
+passwd zoso
+
+ahora metemos al usuario en el grupo wheel
+usermod -aG wheel zoso
+
+puedes verificar con groups zoso
+
+cómo seguimos en root podemos empezar a instalar algunas cosas con
+
+pacman -S sudo git vim neovim nano npm openssh efibootmgr
+
+tiramos de nano el /etc/sudoers y desconectamos la línea que diga wheel all all all
+> ojo con comentar la otra que dice nopasswd que esa no pide contraseña 
+
+abrimos ahora el archivo con
+nano /etc/locale.gen
+
+descomentamos el que diga en mí caso el es_AR utf8
+
+y el en_US utf8 
+
+en nano puedes buscar algo con ctrl + w
+
+ahora aplicamos
+locale-gen
+
+ahora para no estar lidiando con el teclado en inglés podemos tirar
+nano /etc/vconsole.conf
+y le damos
+KEYMAP=es
+
+ahora el tema de grub y tiras la partición dónde estás instalando el so /dev/sda o /dev/nvme0n1 o la que sea
+
+grub-install /dev/sda
+
+una vez realizado con éxito generamos el archivo de configuración de grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+ahora nos encargamos del hostname en mí caso le voy a llamar archlinux
+
+echo archlinux > /etc/hostname
+
+ahora hacemos un archivo de hosts con
+
+nano /etc/hosts
+
+y escribimos lo siguiente 
+
+127.0.0.1   localhost
+::1         localhost
+127.0.0.1   archlinux.localhost archlinux
+
+ahora lo más importante ejecutas 
+pacman -S neofetch fastfetch
+
+luego ejecutas
+neofetch
+
+luego de darle el enter debes decir i use arch btw
+
+sentirás que tienes el poder máximo por saber instalar arch linux
