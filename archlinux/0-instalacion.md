@@ -1,10 +1,45 @@
 # Instalación de Arch Linux
 
+
+
 ## Configuración Inicial
 
 1. Cargamos el layout del teclado en español:
    ```bash
    loadkeys es
+   ```
+
+Para conectarte a internet por Wi-Fi en Arch Linux, puedes usar `iwctl`, la herramienta de administración de redes inalámbricas de `iwd` (iNet wireless daemon). Aquí te dejo los pasos básicos para conectarte a una red Wi-Fi:
+- **Iniciar `iwctl` para gestionar la conexión:**
+   ```bash
+   iwctl
+   ```
+
+- **Dentro de `iwctl`, ver las interfaces Wi-Fi disponibles:**
+   ```bash
+   device list
+   ```
+
+- **Escanear las redes disponibles con tu interfaz Wi-Fi (por ejemplo, `wlan0`):**
+   ```bash
+   station wlan0 scan
+   station wlan0 get-networks
+   ```
+
+- **Conectarte a la red Wi-Fi deseada:**
+   ```bash
+   station wlan0 connect NOMBRE_DE_LA_RED
+   ```
+
+   Te pedirá la contraseña si la red está protegida, solo tienes que ingresarla.
+
+- **Salir de `iwctl`:**
+   ```bash
+   exit
+   ```
+> Puedes tirar un `ping` para verificar que tienes conexión a internet:
+   ```bash
+   ping -c 3 google.com
    ```
 
 2. Definimos las particiones utilizando `cfdisk`:
@@ -51,9 +86,24 @@ Juega con `lsblk` para ver el volumen que particionaste. Si no es un disco **NVM
    - La partición de `boot` en `/mnt/boot`
    - La partición `efi` en `/mnt/boot/efi`
 
+ejemplo suponiendo que:
+- `/dev/sda1` es la partición de **boot/efi**
+- `/dev/sda2` es la partición de **boot**
+- `/dev/sda3` es la partición de **swap** 
+- `/dev/sda4` es la partición de **/**.
+
+```bash
+mount /dev/sda4 /mnt
+mount /dev/sda2 /mnt/boot
+mount /dev/sda1 /mnt/boot/efi
+
+swapon
+```
+
 ## Instalación de Paquetes Básicos
 
 Ahora instalamos los paquetes necesarios con `pacstrap`:
+
 ```bash
 pacstrap /mnt linux linux-firmware networkmanager grub wpa_supplicant base base-devel
 ```
