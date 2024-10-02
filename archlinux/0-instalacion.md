@@ -156,7 +156,7 @@ passwd
 
 Todavía como **root**, podemos empezar a instalar algunos paquetes esenciales:
 ```bash
-pacman -S sudo git vim neovim nano npm openssh efibootmgr
+pacman -S sudo git vim neovim nano npm openssh efibootmgr flameshot htop wget
 ```
 
 ## Configuración de Sudo
