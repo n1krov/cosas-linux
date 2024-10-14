@@ -68,6 +68,9 @@ bandit6@bandit:/$
 
 ---
 
-bandit level 7 -> 8
+bandit level 15 -> 16
 ```bash
+❯ sshpass -p 'kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx' ssh bandit16@bandit.labs.overthewire.org -p 2220
+```
 
+---
