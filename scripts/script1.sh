@@ -14,14 +14,6 @@ echo -e "${green}[*]${end} ${gray}Script de prueba${end}"
 
 function ctrl_c() {
     echo -e "\n${red}[*]${end} ${gray}SALIENDO...${end}"
-    
-    for i in {1..50}; do
-        echo -e "${red}[*]${end} ${gray}Chupalaaaaa... ME PASO POR LOS HUEVOS LO QUE ME DIGAS...${end}\n"
-        echo -e "${red}[FACTOS N°$i]${end} ${gray}TU MAMA POR DONDE MEA... los psicologos no saben un carajo...${end}\n"
-
-        sleep 0.1
-    done
-
     exit 1
 }
 
