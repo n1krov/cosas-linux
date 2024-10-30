@@ -1,5 +1,7 @@
 #!/bin/bash
 
+tput civis    # oculta el cursor
+
 # colorines
 green="\e[0;32m\033[1m"
 end="\033[0m\e[0m"
@@ -14,6 +16,7 @@ echo -e "${green}[*]${end} ${gray}Script de prueba${end}"
 
 function ctrl_c() {
     echo -e "\n${red}[*]${end} ${gray}SALIENDO...${end}"
+    tput cnorm    # muestra el cursor
     exit 1
 }
 
@@ -46,8 +49,8 @@ function panel_help(){
 
 
 
-# La idea es que traiga un script de una url y lo formatee para poder buscar una máquina en concreto.
 function update_files(){
+    # esta funcion se encarga de descargar el archivo bundle.js y formatearlo.
     
     clear
 
@@ -67,12 +70,39 @@ function update_files(){
         # js-beautify es una herramienta que permite formatear el código javascript.
         # sponge es una herramienta que permite redirigir la salida de un comando a un archivo.
         js-beautify bundle.js | sponge bundle.js
+
     else
+        # la idea de este else es que si el archivo ya existe, se deba verificar una actulaziación del archivo.
+        # ultilizando md5sum o sha256sum para verificar si el archivo ha sido modificado.
         echo -e "${green}[*] El archivo bundle.js ya existe.${end}\n"
 
-        # si el archivo ya existe, se formatea el archivo.
-        js-beautify bundle.js | sponge bundle.js
-        
+        sleep 2 # DEBUG
+
+        curl -s -X GET $url_file > bundle_temp.js
+        js-beautify bundle_temp.js | sponge bundle_temp.js
+
+        # se comprueba si el archivo ha sido modificado.
+        original_value=$(md5sum bundle.js | awk '{print $1}')
+        temp_value=$(md5sum bundle_temp.js | awk '{print $1}')
+
+        echo -e "${green}[*]${end} ${gray}Valor original: ${end}${ylw}$original_value${end}"
+        echo -e "${green}[*]${end} ${gray}Valor temporal: ${end}${green}$temp_value${end}\n"
+
+
+
+        # la diferencia entre comparar las variables con "" y sin "" es que si se comparan con "", se comparan como cadenas de texto.
+        # de lo contrario se comparan como números.
+        if [ "$original_value" == "$temp_value" ] ; then
+            echo -e "${green}[*]${end} ${gray}No hay actualizaciones.${end}\n"
+            rm bundle_temp.js
+        else
+            echo -e "${green}[*]${end} ${gray}Actualizando archivo...${end}\n"
+
+
+            rm bundle.js && mv bundle_temp.js bundle.js
+        fi
+            
+
     fi
 
 
@@ -95,6 +125,8 @@ function update_files(){
 
 
 function buscar_maquina(){
+    # esta funcion se encarga de buscar una máquina en el archivo bundle.js.
+
     clear
     
     mensaje="$*"
@@ -131,7 +163,6 @@ while getopts "m:uh" arg; do
             ;;
     esac
 done
-
 # si no se pasa ningún argumento al script, se muestra el panel de ayuda.
 # si se pasa el argumento -m, se muestra el mensaje que se pasa después del argumento -m.
 if [ $var1 -eq 0 ]; then
@@ -145,5 +176,10 @@ else
     buscar_maquina $mensaje
 fi
 
+
 echo -e "${ylw}[~] DEBUG: ${end}${gray}Sleep 10 segundos...${end}"
 sleep 10
+
+
+tput cnorm    # muestra el cursor
+

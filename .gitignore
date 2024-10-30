@@ -2,7 +2,10 @@
 .obsidian/
 
 
+# Carpeta .vscode
+.vscode/
 
-
+# archivos .js de la carpeta scripts 
+scripts/*.js
 
 
