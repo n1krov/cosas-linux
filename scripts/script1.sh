@@ -46,6 +46,7 @@ function panel_help(){
 
     echo -e "\t${green}[-u]${end} ${gray}Actualizar archivos.${end}"
     echo -e "\t${green}[-h]${end} ${gray}Mostrar panel de ayuda.${end}"
+    echo -e "\t${green}[-i]${end} ${gray}Buscar una máquina con la ip que se pasa como argumento.${end}"
 }
 
 
@@ -133,6 +134,19 @@ function buscar_maquina(){
 
 }
 
+function buscar_por_ip(){
+    # esta funcion se encarga de buscar una máquina por la ip.
+    dir_ip="$1"
+    echo -e "${green}[*]${end} ${gray}Buscando la máquina con la ip -> ${end}${ylw}$dir_ip${end}\n"
+    sleep 2
+    clear
+    # cat bundle.js | awk "/ip: \"${dir_ip}\"/,/resuelta:/" | grep -vE "id:|sku:|resuelta" | tr -d '"' | tr -d ','
+    ip_var="$(cat bundle.js | grep "ip: \"10.10.10.5\"" -B3 | grep "name" | awk 'NF{print $NF}' | tr -d '"|,')"
+
+
+    echo -e "${green}[*]${end} La maquina con la ip ${ylw}$dir_ip${end} se llama -> ${turquesa}$ip_var${end}\n"
+}
+
 
 function buscar_ip(){
     # esta funcion se encarga de buscar una máquina en el archivo bundle.js.
@@ -157,12 +171,14 @@ while getopts "m:uhi:" arg; do
     case $arg in
         m)
             var1=1
-            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -m${end}"; sleep 1
+            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -m${end}"
+            sleep 2
             # $OPTARG es la variable que almacena el argumento que se pasa al script. es una variable.
             mensaje=$OPTARG     
             ;;
         u)
-            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -u${end}"; sleep 1
+            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -u${end}"
+            sleep 2
             var1=2
             ;;
         i)
@@ -174,29 +190,33 @@ while getopts "m:uhi:" arg; do
         h)
             var1=-1
             ;;
+        i)
+            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -i${end}"
+            sleep 2
+            var1=3  # Entra en buscar por ip
+            dir_ip=$OPTARG
+            ;;
     esac
 done
+# si no se pasa ningún argumento al script, se muestra el panel de ayuda.
+# si se pasa el argumento -m, se muestra el mensaje que se pasa después del argumento -m.
 
-
-
-if [ $var1 -eq -1 ]; then       # entra por aquí si se pasa el argumento -h
-    panel_help
-elif [ $var1 -eq 0 ]; then      # entra por aquí si no se pasa ningún argumento.
+if [ $var1 -eq -1 ]; then
     clear
-    echo -e "${red}[*]${end} ${gray}No se ha pasado ningún argumento.${end}\n"
-    sleep 2
     panel_help
 elif [ $var1 -eq 1 ]; then    # entra por aquí si se pasa el argumento -m
     buscar_maquina $mensaje
 elif [ $var1 -eq 2 ]; then      # entra por aquí si se pasa el argumento -u 
     # funcion update_files
     update_files
-elif [ $var1 -eq 3 ]; then      # entra por aquí si se pasa el argumento -i
-    buscar_ip $ip_address
+elif [ $var1 -eq 1 ]; then
+    # funcion buscar_maquina
+    buscar_maquina $mensaje
+elif [ $var1 -eq 3 ]; then
+    # funcion buscar_por_ip
+    buscar_por_ip $dir_ip
 else
-    clear
-    echo -e "${red}[*]${end} ${gray}Error en los argumentos.${end}\n"
-    sleep 2
+    echo -e "${red}[*]${end} ${gray}Error en los argumentos.${end}"
     panel_help
 fi
 
@@ -205,4 +225,6 @@ fi
 
 echo -e "\n${ylw}[~] DEBUG: ${end}${gray}Sleep 5 segundos...${end}\n"
 sleep 5
+
+
 tput cnorm    # muestra el cursor
