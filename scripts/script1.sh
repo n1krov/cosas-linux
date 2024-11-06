@@ -114,16 +114,12 @@ function update_files(){
     fi
 }
 
-
 function buscar_maquina(){
     # esta funcion se encarga de buscar una máquina en el archivo bundle.js.
-
     clear
     
     mensaje="$*"
     echo -e "${green}[*]${end} ${gray}Buscando la máquina con el nombre -> ${end}${ylw}$mensaje${end}\n"
-
-
 }
 
 function buscar_por_ip(){
@@ -135,12 +131,12 @@ function buscar_por_ip(){
     # cat bundle.js | awk "/ip: \"${dir_ip}\"/,/resuelta:/" | grep -vE "id:|sku:|resuelta" | tr -d '"' | tr -d ','
     ip_var="$(cat bundle.js | grep "ip: \"10.10.10.5\"" -B3 | grep "name" | awk 'NF{print $NF}' | tr -d '"|,')"
 
-
     echo -e "${green}[*]${end} La maquina con la ip ${ylw}$dir_ip${end} se llama -> ${turquesa}$ip_var${end}\n"
+
+    echo -e "${green}[*]${end} ${gray}Listando información de la máquina...${end}\n"
+    sleep 1
+    buscar_maquina $ip_var
 }
-
-
-
 
 
 #--------------------------- Nucleo del script -----------------------------
@@ -198,9 +194,7 @@ fi
 
 #--------------------------------- DEBUG ---------------------------------
 
-
 echo -e "${ylw}[~] DEBUG: ${end}${gray}Sleep 5 segundos...${end}"
 sleep 5
-
 
 tput cnorm    # muestra el cursor
