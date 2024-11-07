@@ -41,12 +41,13 @@ function panel_help(){
 
 
     echo -e "\t${green}[-m]${end} ${gray}Buscar una máquina por ${ylw}nombre${end}${gray}.${end}"
-
     echo -e "\t${green}[-i]${end} ${gray}Buscar una máquina por ${ylw}Direccion IP${end}${gray}.${end}"
-
     echo -e "\t${green}[-u]${end} ${gray}Actualizar archivos.${end}"
     echo -e "\t${green}[-h]${end} ${gray}Mostrar panel de ayuda.${end}"
     echo -e "\t${green}[-i]${end} ${gray}Buscar una máquina con la ip que se pasa como argumento.${end}"
+    echo -e "\t${green}[-y]${end} ${gray}Buscar el link de youtube de la máquina que se pasa como argumento.${end}"
+    echo -e "\t${green}[-d]${end} ${gray}Buscar una máquina por la dificultad que se pasa como argumento. ${purple}[Fácil, Medio, Difícil, Insane]${end}${end}"
+
 }
 
 
@@ -117,6 +118,20 @@ function update_files(){
 }
 
 
+function buscar_youtube(){
+    # esta funcion devuelve el link de youtube a la maquina que se pasa como argumento.
+    maquina="$1" 
+
+    link=$(cat bundle.js | awk "/name: \"$maquina\"/ , /resuelta:/" | sed "s/ *//" | grep youtube | awk 'NF{print $NF}' | tr -d ',|"')
+   
+    if [ $link ];
+    then
+        echo -e "${green}[*]${end} ${gray}El link de youtube de la máquina ${end}${ylw}Tentacle${end}${gray} es -> ${end}${turquesa}$link${end}\n"
+    else
+        echo -e "${red}[!]${end} ${gray}No se ha encontrado el link de youtube.${end}\n"
+    fi
+}
+
 function buscar_maquina(){
     # esta funcion se encarga de buscar una máquina en el archivo bundle.js.
 
@@ -147,18 +162,27 @@ function buscar_por_ip(){
     echo -e "${green}[*]${end} La maquina con la ip ${ylw}$dir_ip${end} se llama -> ${turquesa}$ip_var${end}\n"
 }
 
-
-function buscar_ip(){
-    # esta funcion se encarga de buscar una máquina en el archivo bundle.js.
-
+# Funcion para buscar por la dificultad
+function buscar_dificultad(){
+    # esta funcion se encarga de buscar una máquina por la dificultad.
+    dif="$1"
+    echo -e "${green}[*]${end} ${gray}Buscando la máquina con la dificultad -> ${end}${ylw}$dif${end}\n"
+    sleep 2
     clear
     
-    ip_address="$1"   # $1 es el primer argumento que se pasa al script.
-
-    echo -e "${green}[*]${end} ${gray}Buscando la máquina con la dirección IP -> ${end}${ylw}$ip_address${end}\n"
+    una_dificultad=$(cat bundle.js | grep "$dif" -B 5 | sed "s/ */󰇴 /" | sed " s/: / -> /" | tr -d '"|,' | grep -vE "id|sku" | sed "s/󰇴 --/~~~~~~~~~~~~~~~~~~~~~~~~/"   )
+   
+    if [ ! $una_dificultad ]; then
+        echo -e "${red}[!]${end} ${gray}No se ha encontrado ninguna máquina con la dificultad ${end}${ylw}$dif${end}${gray}.${end}\n"
+        echo -e "${red}[!]${end} ${gray}Las dificultades son -> ${end}${purple}[Fácil, Medio, Difícil, Insane]${end}\n"
+        echo -e "${red}[!]${end} ${gray}Ten en cuenta las tildes...${end}\n"
+        tput cnorm    # muestra el cursor
+        exit 1
+    else
+        echo -e "${green}[*]${end} ${gray}Máquinas con la dificultad ${ylw}$dif${end}${gray}:${end}\n"
+        echo -e "${una_dificultad}"
+    fi
 }
-
-
 
 #--------------------------- Nucleo del script -----------------------------
 
@@ -167,7 +191,7 @@ function buscar_ip(){
 # h: indica que no se espera un argumento después de la h, en este caso se muestra el panel de ayuda.
 # arg: es la variable que se utiliza para almacenar los argumentos que se pasan al script.
 
-while getopts "m:uhi:" arg; do
+while getopts "m:uhi:y:d:" arg; do
     case $arg in
         m)
             var1=1
@@ -196,6 +220,18 @@ while getopts "m:uhi:" arg; do
             var1=3  # Entra en buscar por ip
             dir_ip=$OPTARG
             ;;
+        y)
+            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -y${end}"
+            sleep 2
+            var1=4
+            maquina=$OPTARG
+            ;;
+        d)
+            echo -e "${ylw}[~]${end}DEBUG: ${gray}Se ha pasado el argumento -d${end}"
+            sleep 2
+            var1=5
+            dif=$OPTARG
+            ;;
     esac
 done
 # si no se pasa ningún argumento al script, se muestra el panel de ayuda.
@@ -215,6 +251,12 @@ elif [ $var1 -eq 1 ]; then
 elif [ $var1 -eq 3 ]; then
     # funcion buscar_por_ip
     buscar_por_ip $dir_ip
+elif [ $var1 -eq 4 ]; then
+    # funcion buscar_youtube
+    buscar_youtube $maquina
+elif [ $var1 -eq 5 ]; then
+    # funcion buscar_dificultad
+    buscar_dificultad $dif
 else
     echo -e "${red}[*]${end} ${gray}Error en los argumentos.${end}"
     panel_help
