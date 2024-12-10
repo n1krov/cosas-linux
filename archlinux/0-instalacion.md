@@ -102,12 +102,15 @@ mkfs.ext4 /dev/sda4
 2. Montar las particiones
 
 Luego de formatear, procede a montarlas en sus respectivos directorios:
-
+```bash
 mkdir -p /mnt/boot/efi
-mount /dev/sda4 /mnt            # Montar la raíz
-mount /dev/sda2 /mnt/boot       # Montar la partición de boot
-mount /dev/sda1 /mnt/boot/efi   # Montar la partición EFI
 
+mount /dev/sda4 /mnt            # Montar la raíz
+
+mount /dev/sda2 /mnt/boot       # Montar la partición de boot
+
+mount /dev/sda1 /mnt/boot/efi   # Montar la partición EFI
+```
 3. Activar el swap
 
 Finalmente, habilita la partición de swap:
