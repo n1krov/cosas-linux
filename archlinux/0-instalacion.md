@@ -85,7 +85,7 @@ Asumiendo que las particiones son las siguientes:
 
 
 Los comandos para formatear son:
-
+```sh
 - Formatear la partición EFI como FAT32
 mkfs.fat -F32 /dev/sda1
 
@@ -97,6 +97,7 @@ mkswap /dev/sda3
 
 - Formatear la partición raíz como EXT4
 mkfs.ext4 /dev/sda4
+```
 
 2. Montar las particiones
 
