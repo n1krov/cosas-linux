@@ -67,38 +67,56 @@ Antes de escribir los cambios y salir de `cfdisk`, asegúrate de modificar el ti
    cfdisk /dev/<nombre_del_volumen>
    ```
 
-## Formateo de Particiones
+## Montaje
 
-Juega con `lsblk` para ver el volumen que particionaste. Si no es un disco **NVMe**, probablemente sea de tipo `/dev/sda`. Así que tomas ese volumen y formateas cada partición como lo definimos anteriormente.
+Antes de montar las particiones, necesitas formatearlas si aún no lo has hecho.
 
----
+1. Formatear las particiones
 
-### Montar las Particiones
+Asumiendo que las particiones son las siguientes:
 
-1. Creamos el directorio para montar la partición `boot`:
-   ```bash
-   mkdir -p /mnt/boot/efi
-   ```
+/dev/sda1: Partición EFI (formato FAT32).
 
-2. Montamos cada partición en su directorio correspondiente:
+/dev/sda2: Partición de boot (formato EXT4).
 
-   - La raíz (`/`) en `/mnt`
-   - La partición de `boot` en `/mnt/boot`
-   - La partición `efi` en `/mnt/boot/efi`
+/dev/sda3: Partición de swap.
 
-ejemplo suponiendo que:
-- `/dev/sda1` es la partición de **boot/efi**
-- `/dev/sda2` es la partición de **boot**
-- `/dev/sda3` es la partición de **swap** 
-- `/dev/sda4` es la partición de **/**.
+/dev/sda4: Partición raíz / (formato EXT4).
 
-```bash
-mount /dev/sda4 /mnt
-mount /dev/sda2 /mnt/boot
-mount /dev/sda1 /mnt/boot/efi
 
-swapon
-```
+Los comandos para formatear son:
+
+- Formatear la partición EFI como FAT32
+mkfs.fat -F32 /dev/sda1
+
+- Formatear la partición boot como EXT4
+mkfs.ext4 /dev/sda2
+
+- Crear el sistema de archivos swap en la partición
+mkswap /dev/sda3
+
+- Formatear la partición raíz como EXT4
+mkfs.ext4 /dev/sda4
+
+2. Montar las particiones
+
+Luego de formatear, procede a montarlas en sus respectivos directorios:
+
+mkdir -p /mnt/boot/efi
+mount /dev/sda4 /mnt            # Montar la raíz
+mount /dev/sda2 /mnt/boot       # Montar la partición de boot
+mount /dev/sda1 /mnt/boot/efi   # Montar la partición EFI
+
+3. Activar el swap
+
+Finalmente, habilita la partición de swap:
+
+swapon /dev/sda3
+
+Nota
+
+Asegúrate de que estas acciones sean las correctas para tu configuración, ya que el formateo elimina todos los datos de las particiones.
+
 
 ## Instalación de Paquetes Básicos
 
