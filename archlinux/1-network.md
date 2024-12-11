@@ -1,3 +1,5 @@
+start y enable a los servicios de NetworkManager y wpa_supplicant si no lo hiciste 
+
 Ya que tienes `NetworkManager` activado y `wpa_supplicant` para gestionar conexiones Wi-Fi, te dejo los pasos para conectarte a una red Wi-Fi utilizando `NetworkManager` de manera sencilla.
 
 ### Métodos para conectarte a Wi-Fi con `NetworkManager`
