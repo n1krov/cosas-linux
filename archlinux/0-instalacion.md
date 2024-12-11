@@ -229,6 +229,8 @@ pacman -S sudo git vim neovim nano npm openssh efibootmgr htop wget
    grub-install /dev/sda
    ```
 
+> Nota: Si tienes problemas con que no existe el directorio EFI, verifica que el archivo fstab no te haya dado conflictos y si es así crea el directorio de boot/efi nuevamente y monta la partición efi y vuelve a probar
+
 2. Generamos el archivo de configuración de **GRUB**:
    ```bash
    grub-mkconfig -o /boot/grub/grub.cfg
