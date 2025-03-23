@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "20a96a0425205af1",
+        "id": "743658327602815c",
         "type": "tabs",
         "children": [
           {
-            "id": "3b03f499f5c3933f",
+            "id": "799078b96489328c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "2_reconocimiento/Google Dorks.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Google Dorks"
+                "file": "Notas Diarias/Reconocimiento/Reconocimiento.md",
             }
           }
         ]
@@ -169,14 +165,14 @@
     "2_reconocimiento/Google Dorks.md",
     "Notas Diarias/2024-08-23.md",
     "Notas Diarias/2024-08-22.md",
-    "README.md",
     "Notas Diarias/2024-08-21.md",
+    "todo.md",
+    "README.md",
     "Mapa.canvas",
     "Notas Diarias",
     "Parte_1/stder_stdout.md",
     "Parte_1/Comandos.md",
     "Parte_1/Descriptores.md",
-    "General/Basurero.md",
     "General",
     "Sin título.md",
     "Parte_1"
